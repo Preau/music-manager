@@ -1,0 +1,14 @@
+{
+  "name": "music-manager",
+  "version": "1.0.0",
+  "main": "index.php",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Preau/music-manager.git"
+  },
+  "author": {
+    "name": "Koen van Zuijlen",
+    "email": "khavanzuijlen@gmail.com"
+  },
+  "license": "MIT"
+}

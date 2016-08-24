@@ -1,0 +1,11 @@
+{
+    "name": "preau/music-manager",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Koen van Zuijlen",
+            "email": "khavanzuijlen@gmail.com"
+        }
+    ]
+}
