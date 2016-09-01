@@ -15,11 +15,33 @@ function autoload($className)
 spl_autoload_register('autoload');
 
 use MusicManager\Discogs;
-
 require 'vendor/autoload.php';
 
 $dotenv = new Dotenv\Dotenv(__DIR__);
 $dotenv->load();
 
-$d = new Discogs();
-$d->getMaster(620726);
+//Read directories
+$path = getenv('MUSIC_LIBRARY');
+$handle = opendir($path);
+$dirs = [];
+while($entry = readdir($handle)) {
+	if(is_dir($path.DIRECTORY_SEPARATOR.$entry) && substr($entry, 0, 1) !== '.') {
+		$dirs[] = $entry;
+	}
+	echo $entry;
+}
+asort($dirs);
+
+?>
+<html>
+	<head>
+		<title>Music Manager</title>
+	</head>
+	<body>
+		<ul>
+			<? foreach($dirs as $dir) { ?>
+				<li><?=$dir?> <input type="text" value=""></li>
+			<? } ?>
+		</ul>
+	</body>
+</html>
