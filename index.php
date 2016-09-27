@@ -12,17 +12,19 @@ $library = Library::loadLibrary();
 		<title>Music Manager</title>
 	</head>
 	<body>
-		<form method="post" action="">
-			<button type="submit">Save everything</button>
+		<form method="post" action="post.php">
+			<button type="submit" name="request" value="savemasterids">Save everything</button>
 			<? $i = 1;
-			foreach($library as $dir => $data) { ?>
-				<div class="directory">
-					<?=$dir?>
-					<input type="hidden" name="dir[<?=$i?>]" value="<?=$dir?>">
-					<input type="text" name="master[<?=$i?>]" value="">
-					<a href="https://www.discogs.com/search?q=<?=urlencode($dir)?>&type=master" target="_blank">Search on Discogs</a>
-				</div>
-				<? $i++;
+			foreach($library as $dir => $data) {
+				if(!isset($data['deleted'])) { ?>
+					<div class="directory">
+						<?=$dir?>
+						<input type="hidden" name="dir[<?=$i?>]" value="<?=$dir?>">
+						<input type="text" name="master[<?=$i?>]" value="<?=(isset($data['master']) ? $data['master'] : '')?>">
+						<a href="https://www.discogs.com/search?q=<?=urlencode($dir)?>&type=master" target="_blank">Search on Discogs</a>
+					</div>
+				<? }
+				$i++;
 			} ?>
 		</form>
 	</body>

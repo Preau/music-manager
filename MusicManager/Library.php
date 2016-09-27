@@ -23,7 +23,7 @@ class Library {
 	 * Read the library.json file if it exists
 	 * @return array|null
 	 */
-	public static function readFile() {
+	private static function readFile() {
 		if(file_exists(self::FILEPATH)) {
 			return json_decode(file_get_contents(self::FILEPATH), JSON_OBJECT_AS_ARRAY);
 		} else {
@@ -98,5 +98,23 @@ class Library {
 		array_multisort(array_keys($library), SORT_NATURAL|SORT_FLAG_CASE, $library);
 		self::writeFile($library);
 		return $library;
+	}
+
+	/**
+	 * Save master id for each item to library file
+	 * @param array $post
+	 */
+	public static function saveMasterIds($post) {
+		if(isset($post['dir']) && isset($post['master'])) {
+			$library = Library::loadLibrary();
+
+			foreach($post['dir'] as $number => $dir) {
+				if(!empty($post['master'][$number])) {
+					$library[$dir]['master'] = $post['master'][$number];
+				}
+			}
+
+			self::writeFile($library);
+		}
 	}
 }
