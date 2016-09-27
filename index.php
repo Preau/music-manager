@@ -14,17 +14,14 @@ $library = Library::loadLibrary();
 	<body>
 		<form method="post" action="post.php">
 			<button type="submit" name="request" value="savemasterids">Save everything</button>
-			<? $i = 1;
-			foreach($library as $dir => $data) {
+			<? foreach($library as $number => $data) {
 				if(!isset($data['deleted'])) { ?>
 					<div class="directory">
-						<?=$dir?>
-						<input type="hidden" name="dir[<?=$i?>]" value="<?=$dir?>">
-						<input type="text" name="master[<?=$i?>]" value="<?=(isset($data['master']) ? $data['master'] : '')?>">
+						<?=$data['dir']?>
+						<input type="text" name="master[<?=$number?>]" value="<?=(isset($data['master']) ? $data['master'] : '')?>">
 						<a href="https://www.discogs.com/search?q=<?=urlencode($dir)?>&type=master" target="_blank">Search on Discogs</a>
 					</div>
 				<? }
-				$i++;
 			} ?>
 		</form>
 	</body>

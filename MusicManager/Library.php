@@ -46,8 +46,10 @@ class Library {
 	 */
 	private static function initFile($dirs) {
 		$library = [];
+		$count = 1;
 		foreach($dirs as $dir) {
-			$library[$dir] = [];
+			$library[$count]['dir'] = $dir;
+			$count++;
 		}
 		self::writeFile($library);
 		return $library;
@@ -77,25 +79,37 @@ class Library {
 	 * @return array
 	 */
 	private static function compareLibraryAndDirectories($library, $dirs) {
-		$libraryClone = $library;
+		$dirsInLibrary = [];
+		$maxnumber = 1;
 
-		foreach($dirs as $dir) {
-			if(!isset($library[$dir])) {
-				//Doesn't exist in file add it
-				$library[$dir] = [];
+		foreach($library as $number => $data) {
+			if(!in_array($data['dir'], $dirs)) {
+				//No folder but is in library, mark as deleted
+				$library[$number]['deleted'] = 1;
 			} else {
-				//Already exists in file, remove it from clone, remove possible deleted flag
-				unset($libraryClone[$dir]);
-				unset($library[$dir]['deleted']);
+				//Both in folder and library
+				unset($library[$number]['deleted']);
+			}
+			$dirsInLibrary[] = $data['dir'];
+
+			if($number > $maxnumber) {
+				$maxnumber = $number;
 			}
 		}
 
-		//Everything remained in clone is deleted from library, add deleted flag
-		foreach(array_keys($libraryClone) as $dir) {
-			$library[$dir]['deleted'] = 1;
+		foreach($dirs as $dir) {
+			if(!in_array($dir, $dirsInLibrary)) {
+				//New folder not yet in library, add it
+				$maxnumber++;
+				$library[$maxnumber]['dir'] = $dir;
+			}
 		}
 
-		array_multisort(array_keys($library), SORT_NATURAL|SORT_FLAG_CASE, $library);
+		//Sort by folder name
+		uasort($library, function($a, $b) {
+			return strnatcasecmp($a['dir'], $b['dir']);
+		});
+
 		self::writeFile($library);
 		return $library;
 	}
@@ -105,12 +119,12 @@ class Library {
 	 * @param array $post
 	 */
 	public static function saveMasterIds($post) {
-		if(isset($post['dir']) && isset($post['master'])) {
+		if(isset($post['master'])) {
 			$library = Library::loadLibrary();
 
-			foreach($post['dir'] as $number => $dir) {
+			foreach($post['master'] as $number => $masterId) {
 				if(!empty($post['master'][$number])) {
-					$library[$dir]['master'] = $post['master'][$number];
+					$library[$number]['master'] = $post['master'][$number];
 				}
 			}
 
