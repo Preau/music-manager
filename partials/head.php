@@ -10,12 +10,12 @@ function autoload($className)
 		$fileName  = str_replace('\\', DIRECTORY_SEPARATOR, $namespace) . DIRECTORY_SEPARATOR;
 	}
 	$fileName .= str_replace('_', DIRECTORY_SEPARATOR, $className) . '.php';
-	require __DIR__.'/../'.$fileName;
+	require __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.$fileName;
 }
 spl_autoload_register('autoload');
 
 //Load composer modules
-require __DIR__.'/../vendor/autoload.php';
+require __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'autoload.php';
 
 //Load environment
 $dotenv = new Dotenv\Dotenv(__DIR__.'/..');
