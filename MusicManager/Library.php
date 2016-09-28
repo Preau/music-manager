@@ -65,7 +65,7 @@ class Library {
 		$dirs = [];
 		while($entry = readdir($handle)) {
 			if(is_dir($path.DIRECTORY_SEPARATOR.$entry) && substr($entry, 0, 1) !== '.') {
-				$dirs[] = utf8_encode($entry);
+				$dirs[] = $entry;
 			}
 		}
 		natcasesort($dirs);
@@ -123,8 +123,12 @@ class Library {
 			$library = Library::loadLibrary();
 
 			foreach($post['master'] as $number => $masterId) {
-				if(!empty($post['master'][$number])) {
-					$library[$number]['master'] = $post['master'][$number];
+				if(isset($library[$number])) {
+					if(empty($masterId)) {
+						unset($library[$number]['master']);
+					} else {
+						$library[$number]['master'] = $masterId;
+					}
 				}
 			}
 
