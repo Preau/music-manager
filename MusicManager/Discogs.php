@@ -9,7 +9,7 @@ class Discogs {
 	 * @param string $url
 	 * @return array
 	 */
-	private function request($url) {
+	private static function request($url) {
 		$ch = curl_init(self::BASE_URL . $url);
 		curl_setopt($ch, CURLOPT_HTTPHEADER, [
 			'User-Agent: music-manager/1.0.0',
@@ -29,8 +29,9 @@ class Discogs {
 	/**
 	 * Get the data for a master release
 	 * @param int $identifier
+	 * @return array
 	 */
-	public function getMaster($identifier) {
-		print_r(self::request('masters/'.$identifier));
+	public static function getMaster($identifier) {
+		return self::request('masters/'.$identifier);
 	}
 }

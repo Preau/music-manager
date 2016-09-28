@@ -1,5 +1,6 @@
 {
   "name": "music-manager",
+  "description": "Autoload genres into your music library from Discogs",
   "version": "1.0.0",
   "main": "index.php",
   "repository": {
@@ -10,5 +11,14 @@
     "name": "Koen van Zuijlen",
     "email": "khavanzuijlen@gmail.com"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "babel-preset-es2015": "^6.14.0",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-concat": "^2.6.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^2.0.0",
+    "jquery": "^3.1.1"
+  }
 }
