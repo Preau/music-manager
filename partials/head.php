@@ -17,6 +17,9 @@ spl_autoload_register('autoload');
 //Load composer modules
 require __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'autoload.php';
 
+//Load library
+require_once __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'lib'.DIRECTORY_SEPARATOR.'getid3'.DIRECTORY_SEPARATOR.'getid3.php';
+
 //Load environment
 $dotenv = new Dotenv\Dotenv(__DIR__.'/..');
 $dotenv->load();
