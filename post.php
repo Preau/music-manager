@@ -1,4 +1,6 @@
 <?php
+ini_set('max_execution_time', 0);
+
 use MusicManager\Discogs;
 use MusicManager\Library;
 use MusicManager\File;
@@ -9,8 +11,8 @@ switch($_POST['request']) {
 	case 'savemasterids':
 		saveMasterIds();
 		break;
-	case 'findgenre':
-		findGenre();
+	case 'checkgenres':
+		checkGenres();
 		break;
 	case 'savegenre':
 		saveGenre();
@@ -25,7 +27,7 @@ function saveMasterIds() {
 	header('Location: index.php');
 }
 
-function findGenre() {
+function checkGenres() {
 	$number = $_POST['number'];
 	$library = Library::loadLibrary();
 
@@ -37,8 +39,17 @@ function findGenre() {
 			throw new Exception('Master ID not set');
 		}
 
+		//Retrieve from Discogs
 		$master = Discogs::getMaster($library[$number]['master']);
-		echo json_encode($master);
+		$discogs = array_unique(array_merge($master['genres'], $master['styles']));
+
+		//Retrieve from files
+		$file = File::readGenre($library[$number]['dir']);
+
+		echo json_encode([
+			'discogs' => $discogs,
+			'file' => $file
+		]);
 
 	} catch(Exception $e) {
 		echo json_encode(['message' => $e->getMessage()]);
@@ -53,9 +64,14 @@ function saveGenre() {
 		if(!isset($library[$number])) {
 			throw new Exception('Library item not found');
 		}
+		if(!$_POST['genres'] || !is_array($_POST['genres'])) {
+			throw new Exception('Invalid request');
+		}
 
-		File::getGenre($library[$number]['dir']);
+		///Write the genres
+		File::writeGenre($library[$number]['dir'], $_POST['genres']);
 
+		echo json_encode(['success' => 1]);
 	} catch(Exception $e) {
 		echo json_encode(['message' => $e->getMessage()]);
 	}

@@ -23,10 +23,12 @@ $library = Library::loadLibrary();
 						<br>
 						<input type="text" id="master-<?=$number?>" name="master[<?=$number?>]" value="<?=(isset($data['master']) ? $data['master'] : '')?>">
 						<br>
-						Found genre: <span id="genre-<?=$number?>"></span>
+						File genre: <span id="genre-file-<?=$number?>"></span>
 						<br>
-						<button type="button" onclick="findGenre(<?=$number?>)">Find genre</button>
-						<button type="button" onclick="saveGenre(<?=$number?>)">Save genre</button>
+						Discogs genre: <span id="genre-discogs-<?=$number?>"></span>
+						<br>
+						<button type="button" onclick="checkGenres(<?=$number?>)">Find genre</button>
+						<button type="button" id="save-genre-<?=$number?>" onclick="saveGenre(<?=$number?>)" disabled="disabled">Save genre</button>
 						<br>
 						<a href="https://www.discogs.com/search?q=<?=urlencode($data['dir'])?>&type=master" target="_blank">Search on Discogs</a>
 

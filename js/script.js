@@ -1,34 +1,40 @@
-function findGenre(number) {
+function checkGenres(number) {
 	$.ajax({
 		url: 'post.php',
 		data: {
-			request: 'findgenre',
+			request: 'checkgenres',
 			number
 		},
 		method: 'POST',
 		dataType : 'json'
 	}).done(data => {
 		if(!data.message) {
-			let genre = data.genres.concat(data.styles.filter(item => {
-				return data.genres.indexOf(item) < 0;
-			}));
-			$("#genre-"+number).text(genre);
+			let filegenre = data.file.join(";");
+			let discogsgenre = data.discogs.join(";");
+			$('#genre-file-'+number).text(filegenre);
+			$('#genre-discogs-'+number).text(discogsgenre);
+			$("#save-genre-"+number).prop('disabled', filegenre === discogsgenre);
+		} else {
+			alert(data.message);
 		}
 	});
 }
 
 function saveGenre(number) {
+	let discogsgenre = $('#genre-discogs-'+number).text();
+	let genres = discogsgenre.length ? discogsgenre.split(";") : [];
 	$.ajax({
 		url: 'post.php',
 		data: {
 			request: 'savegenre',
-			number
+			number,
+			genres
 		},
 		method: 'POST',
 		dataType: 'json'
 	}).done(data => {
 		if(!data.message) {
-			console.log(data);
+			checkGenres(number);
 		}
 	});
 }
