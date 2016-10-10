@@ -1,0 +1,39 @@
+//Variables
+$grey: #dfdce3;
+$blue: #4abdac;
+
+@import 'vendor/fontawesome/font-awesome';
+@import 'https://fonts.googleapis.com/css?family=Raleway:500';
+@import 'https://fonts.googleapis.com/css?family=Open+Sans';
+
+body {
+	font-family: 'Open Sans', sans-serif;
+	margin:      10px 50px;
+}
+
+#library-wrapper {
+	.library-item {
+		padding:       10px;
+		background:    $grey;
+		margin-bottom: 25px;
+		box-shadow:    2px 2px 2px 0 rgba(0, 0, 0, .2);
+
+		h2 {
+			font-family:   'Raleway', sans-serif;
+			text-align:    center;
+			margin:        0;
+			text-overflow: ellipsis;
+			overflow:      hidden;
+			white-space:   nowrap;
+		}
+
+		a {
+			color: $blue;
+		}
+
+		label {
+			display: inline-block;
+			width:   100px;
+		}
+	}
+}
