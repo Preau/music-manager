@@ -8,7 +8,7 @@
 <body>
 	<form method="post" action="post.php">
 		<div id="header">
-			<button type="submit" name="request" value="savemasterids">Save everything</button>
+			<button type="submit" name="request" value="saveids">Save everything</button>
 		</div>
 		<div id="library-wrapper">
 			{% for number, data in library %}
@@ -19,6 +19,11 @@
 						<label for="master-{{ number }}"><i class="fa fa-bullseye" title="Discogs"></i> Master ID</label><input type="text" id="master-{{ number }}" name="master[{{ number }}]" value="{{ data.master }}">
 						<a href="https://www.discogs.com/search?q={{ data.dir|url_encode }}&type=master" target="_blank" title="Search Discogs"><i class="fa fa-search"></i></a>
 						<br>
+
+						<label for="release-{{ number }}"><i class="fa fa-bullseye" title="Discogs"></i> Release ID</label><input type="text" id="release-{{ number }}" name="release[{{ number }}]" value="{{ data.release }}">
+						<a href="https://www.discogs.com/search?q={{ data.dir|url_encode }}&type=release" target="_blank" title="Search Discogs"><i class="fa fa-search"></i></a>
+						<br>
+
 						<label><i class="fa fa-bullseye" title="Discogs"></i> Genre</label><span id="genre-discogs-{{ number }}"></span><br>
 						<label><i class="fa fa-file-audio-o" title="File"></i> Genre</label><span id="genre-file-{{ number }}"></span><br>
 

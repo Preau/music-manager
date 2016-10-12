@@ -118,10 +118,10 @@ class Library {
 	 * Save master id for each item to library file
 	 * @param array $post
 	 */
-	public static function saveMasterIds($post) {
-		if(isset($post['master'])) {
-			$library = Library::loadLibrary();
+	public static function saveIds($post) {
+		$library = Library::loadLibrary();
 
+		if(isset($post['master'])) {
 			foreach($post['master'] as $number => $masterId) {
 				if(isset($library[$number])) {
 					if(empty($masterId)) {
@@ -131,8 +131,20 @@ class Library {
 					}
 				}
 			}
-
-			self::writeFile($library);
 		}
+
+		if(isset($post['release'])) {
+			foreach($post['release'] as $number => $releaseId) {
+				if(isset($library[$number])) {
+					if(empty($releaseId)) {
+						unset($library[$number]['release']);
+					} else {
+						$library[$number]['release'] = $releaseId;
+					}
+				}
+			}
+		}
+
+		self::writeFile($library);
 	}
 }

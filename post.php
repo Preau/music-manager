@@ -8,8 +8,8 @@ use MusicManager\File;
 require 'partials/head.php';
 
 switch($_POST['request']) {
-	case 'savemasterids':
-		saveMasterIds();
+	case 'saveids':
+		saveIds();
 		break;
 	case 'checkgenres':
 		checkGenres();
@@ -22,8 +22,8 @@ switch($_POST['request']) {
 }
 die();
 
-function saveMasterIds() {
-	Library::saveMasterIds($_POST);
+function saveIds() {
+	Library::saveIds($_POST);
 	header('Location: index.php');
 }
 
@@ -35,13 +35,18 @@ function checkGenres() {
 		if(!isset($library[$number])) {
 			throw new Exception('Library item not found');
 		}
-		if(!isset($library[$number]['master'])) {
-			throw new Exception('Master ID not set');
+		if(!isset($library[$number]['master']) && !isset($library[$number]['release']) ) {
+			throw new Exception('IDs not set');
 		}
 
 		//Retrieve from Discogs
-		$master = Discogs::getMaster($library[$number]['master']);
-		$discogs = array_unique(array_merge($master['genres'], $master['styles']));
+		$response = [];
+		if(isset($library[$number]['master'])) {
+			$response = Discogs::getMaster($library[$number]['master']);
+		} elseif(isset($library[$number]['release'])) {
+			$response = Discogs::getRelease($library[$number]['release']);
+		}
+		$discogs = array_unique(array_merge($response['genres'], $response['styles']));
 
 		//Retrieve from files
 		$file = File::readGenre($library[$number]['dir']);

@@ -27,11 +27,20 @@ class Discogs {
 	}
 
 	/**
-	 * Get the data for a master release
+	 * Get the data for a master
 	 * @param int $identifier
 	 * @return array
 	 */
 	public static function getMaster($identifier) {
 		return self::request('masters/'.$identifier);
+	}
+
+	/**
+	 * Get the data for a release
+	 * @param int $identifier
+	 * @return array
+	 */
+	public static function getRelease($identifier) {
+		return self::request('releases/'.$identifier);
 	}
 }
