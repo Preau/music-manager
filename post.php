@@ -47,6 +47,9 @@ function checkGenres() {
 			$response = Discogs::getRelease($library[$number]['release']);
 		}
 		$discogs = array_unique(array_merge($response['genres'], $response['styles']));
+		if(!sizeof($discogs)) {
+			throw new Exception('No genre found');
+		}
 
 		//Retrieve from files
 		$file = File::readGenre($library[$number]['dir']);

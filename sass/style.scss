@@ -1,6 +1,9 @@
 //Variables
 $grey: #dfdce3;
 $blue: #4abdac;
+$green: #b3ff70;
+$red: #ff5956;
+$yellow: #ffff99;
 
 @import 'vendor/fontawesome/font-awesome';
 @import 'https://fonts.googleapis.com/css?family=Raleway:500';
@@ -34,6 +37,16 @@ body {
 		label {
 			display: inline-block;
 			width:   100px;
+		}
+
+		&.correct {
+			background: $green;
+		}
+		&.incorrect {
+			background: $red;
+		}
+		&.warning {
+			background: $yellow;
 		}
 	}
 }

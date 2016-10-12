@@ -11,11 +11,13 @@ function checkGenres(number) {
 		if(!data.message) {
 			let filegenre = data.file.join(";");
 			let discogsgenre = data.discogs.join(";");
+			let correct = filegenre === discogsgenre;
 			$('#genre-file-'+number).text(filegenre);
 			$('#genre-discogs-'+number).text(discogsgenre);
-			$("#save-genre-"+number).prop('disabled', filegenre === discogsgenre);
+			$("#save-genre-"+number).prop('disabled', correct);
+			$("#library-item-"+number).toggleClass('correct', correct).toggleClass('incorrect', !correct);
 		} else {
-			alert(data.message);
+			$("#library-item-"+number).addClass('warning');
 		}
 	});
 }
