@@ -39,6 +39,9 @@ function checkGenres() {
 			throw new Exception('IDs not set');
 		}
 
+		//Retrieve from files
+		$file = File::readGenre($library[$number]['dir']);
+
 		//Retrieve from Discogs
 		$response = [];
 		if(isset($library[$number]['master'])) {
@@ -50,9 +53,6 @@ function checkGenres() {
 		if(!sizeof($discogs)) {
 			throw new Exception('No genre found');
 		}
-
-		//Retrieve from files
-		$file = File::readGenre($library[$number]['dir']);
 
 		echo json_encode([
 			'discogs' => $discogs,

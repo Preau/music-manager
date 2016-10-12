@@ -8,7 +8,8 @@
 <body>
 	<form method="post" action="post.php">
 		<div id="header">
-			<button type="submit" name="request" value="saveids">Save everything</button>
+			<button type="submit" name="request" value="saveids">Save IDs</button>
+			<button type="button" onclick="checkAllGenres();">Check all genres</button>
 		</div>
 		<div id="library-wrapper">
 			{% for number, data in library %}

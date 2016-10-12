@@ -22,6 +22,21 @@ function checkGenres(number) {
 	});
 }
 
+function checkAllGenres() {
+	let count = 0;
+	let libraryItems = $('.library-item');
+	let interval = setInterval(() => {
+		if(libraryItems[count]) {
+			let item = libraryItems.slice(count, count + 1);
+			let number = $(item).attr('id').replace('library-item-', '');
+			checkGenres(number);
+			count++;
+		} else {
+			clearInterval(interval);
+		}
+	}, 2000);
+}
+
 function saveGenre(number) {
 	let discogsgenre = $('#genre-discogs-'+number).text();
 	let genres = discogsgenre.length ? discogsgenre.split(";") : [];
