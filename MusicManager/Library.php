@@ -84,11 +84,8 @@ class Library {
 
 		foreach($library as $number => $data) {
 			if(!in_array($data['dir'], $dirs)) {
-				//No folder but is in library, mark as deleted
-				$library[$number]['deleted'] = 1;
-			} else {
-				//Both in folder and library
-				unset($library[$number]['deleted']);
+				//No folder but is in library
+				unset($library[$number]);
 			}
 			$dirsInLibrary[] = $data['dir'];
 
