@@ -49,7 +49,10 @@ function checkGenres() {
 		} elseif(isset($library[$number]['release'])) {
 			$response = Discogs::getRelease($library[$number]['release']);
 		}
-		$discogs = array_unique(array_merge($response['genres'], $response['styles']));
+		$discogs = array_unique(array_merge(
+			isset($response['genres']) ? $response['genres'] : [],
+			isset($response['styles']) ? $response['styles'] : []
+		));
 		if(!sizeof($discogs)) {
 			throw new Exception('No genre found');
 		}

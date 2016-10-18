@@ -10,7 +10,7 @@ function checkGenres(number) {
 	}).done(data => {
 		if(!data.message) {
 			let filegenre = data.file.join(";");
-			let discogsgenre = data.discogs.join(";");
+			let discogsgenre = data.discogs.join(";").replace("/", "&");
 			let correct = filegenre === discogsgenre;
 			$('#genre-file-'+number).text(filegenre);
 			$('#genre-discogs-'+number).text(discogsgenre);

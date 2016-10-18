@@ -64,7 +64,7 @@ class Library {
 		$handle = opendir($path);
 		$dirs = [];
 		while($entry = readdir($handle)) {
-			if(is_dir($path.DIRECTORY_SEPARATOR.$entry) && substr($entry, 0, 1) !== '.') {
+			if(is_dir($path.DIRECTORY_SEPARATOR.$entry) && !in_array(substr($entry, 0, 1), ['.','@'])) {
 				$dirs[] = $entry;
 			}
 		}
